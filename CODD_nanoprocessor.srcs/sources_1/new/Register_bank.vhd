@@ -33,6 +33,8 @@ ENTITY Register_bank IS
     PORT (
         clk : IN STD_LOGIC;
         register_enable : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+        register_bank_enable : IN STD_LOGIC;
+        reset : IN STD_LOGIC;
         data_in : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
         data_out0 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
         data_out1 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
@@ -71,19 +73,12 @@ BEGIN
 
     Decoder_3_8_0 : Decoder_3_to_8
     PORT MAP(
-        EN => '1',
+        EN => register_bank_enable,
         I => register_enable,
         Y => decoder_output
     );
 
-    Register_0 : Reg
-    PORT MAP(
-        Clk => clk,
-        En => decoder_output(0),
-        D => data_in,
-        Q => data_out0,
-        Reset => '0'
-    );
+    data_out0 <= "0000";
 
     Register_1 : Reg
     PORT MAP(
@@ -91,7 +86,7 @@ BEGIN
         En => decoder_output(1),
         D => data_in,
         Q => data_out1,
-        Reset => '0'
+        Reset => reset
     );
 
     Register_2 : Reg
@@ -100,7 +95,7 @@ BEGIN
         En => decoder_output(2),
         D => data_in,
         Q => data_out2,
-        Reset => '0'
+        Reset => reset
     );
 
     Register_3 : Reg
@@ -109,7 +104,7 @@ BEGIN
         En => decoder_output(3),
         D => data_in,
         Q => data_out3,
-        Reset => '0'
+        Reset => reset
     );
 
     Register_4 : Reg
@@ -118,7 +113,7 @@ BEGIN
         En => decoder_output(4),
         D => data_in,
         Q => data_out4,
-        Reset => '0'
+        Reset => reset
     );
 
     Register_5 : Reg
@@ -127,7 +122,7 @@ BEGIN
         En => decoder_output(5),
         D => data_in,
         Q => data_out5,
-        Reset => '0'
+        Reset => reset
     );
 
     Register_6 : Reg
@@ -136,7 +131,7 @@ BEGIN
         En => decoder_output(6),
         D => data_in,
         Q => data_out6,
-        Reset => '0'
+        Reset => reset
     );
 
     Register_7 : Reg
@@ -145,6 +140,6 @@ BEGIN
         En => decoder_output(7),
         D => data_in,
         Q => data_out7,
-        Reset => '0'
+        Reset => reset
     );
 END Behavioral;
